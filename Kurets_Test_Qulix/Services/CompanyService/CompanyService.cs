@@ -1,5 +1,6 @@
 ﻿using Kurets_Test_Qulix.Models;
 using Kurets_Test_Qulix.Services.Interface;
+using Microsoft.Extensions.Configuration;
 using System;
 using System.Collections.Generic;
 using System.Data;
@@ -12,13 +13,14 @@ namespace Kurets_Test_Qulix.Services.CompanyService
     public class CompanyService : IService<Company>
     {
         private readonly DataSet data;
-        public string connectionString = @"Data Source=LAPTOP-S2L9C420;Initial Catalog=TestDb;Integrated Security=True";
-
+        private readonly IConfiguration _configuration;
+        
         //Fill the dataset.
-        public CompanyService()
+        public CompanyService(IConfiguration configuration)
         {
             data = new DataSet();
-            using (SqlConnection connection = new SqlConnection(connectionString))
+            _configuration = configuration;
+            using (SqlConnection connection = new SqlConnection(_configuration.GetConnectionString("MyConnection"))) 
             {
                 connection.Open();
                 var dataAdapter = new SqlDataAdapter("SELECT * FROM Companies", connection);
@@ -44,15 +46,18 @@ namespace Kurets_Test_Qulix.Services.CompanyService
         //Add the company.
         public void Add(Company company)
         {
-            using (SqlConnection connection = new SqlConnection(connectionString))
+            using (SqlConnection connection = new SqlConnection(_configuration.GetConnectionString("MyConnection")))
             {
+
                 using (SqlCommand cmd = new SqlCommand())
                 {
                     connection.Open();
+                    cmd.Connection = connection;
                     cmd.CommandType = CommandType.StoredProcedure;
                     cmd.CommandText = "AddCompany";
                     cmd.Parameters.AddWithValue("@name", company.Name);
                     cmd.Parameters.AddWithValue("@form", company.Form);
+                    cmd.ExecuteNonQuery();
 
                 }
             }
@@ -61,11 +66,12 @@ namespace Kurets_Test_Qulix.Services.CompanyService
         //Edit the company.
         public void Edit(Company company)
         {
-            using (SqlConnection connection = new SqlConnection(connectionString))
+            using (SqlConnection connection = new SqlConnection(_configuration.GetConnectionString("MyConnection")))
             {
                 using (SqlCommand cmd = new SqlCommand())
                 {
                     connection.Open();
+                    cmd.Connection = connection;
                     cmd.CommandType = CommandType.StoredProcedure;
                     cmd.CommandText = "EditCompany";
                     cmd.Parameters.AddWithValue("@name", company.Name);
@@ -79,11 +85,12 @@ namespace Kurets_Test_Qulix.Services.CompanyService
         //Delete the company.
         public void Delete(Company company)
         {
-            using (SqlConnection connection = new SqlConnection(connectionString))
+            using (SqlConnection connection = new SqlConnection(_configuration.GetConnectionString("MyConnection")))
             {
                 using (SqlCommand cmd = new SqlCommand())
                 {
                     connection.Open();
+                    cmd.Connection = connection;
                     cmd.CommandType = CommandType.StoredProcedure;
                     cmd.CommandText = "DeleteCompany";
                     cmd.Parameters.AddWithValue("@name", company.Name);

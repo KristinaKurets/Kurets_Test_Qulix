@@ -26,7 +26,6 @@ namespace Kurets_Test_Qulix.Controllers
         /// <param name="employee"> Added person.</param>
         /// <returns>On success returns 204 status code.</returns>
         [HttpPost]
-        [Route("add")]
         public ActionResult AddEmployee(Employee employee)
         {
             _service.Add(employee);
@@ -40,7 +39,6 @@ namespace Kurets_Test_Qulix.Controllers
         /// <param name="employee"> Edited person.</param>
         /// <returns>On success returns 204 status code.</returns>
         [HttpPost]
-        [Route("edit")]
         public ActionResult EditEmployee(Employee employee)
         {
             _service.Edit(employee);
@@ -53,7 +51,6 @@ namespace Kurets_Test_Qulix.Controllers
         /// <param name="employee"> Deleted person.</param>
         /// <returns>On success returns 204 status code.</returns>
         [HttpPost]
-        [Route("delete")]
         public ActionResult DeleteEmployee(Employee employee)
         {
             _service.Delete(employee);
