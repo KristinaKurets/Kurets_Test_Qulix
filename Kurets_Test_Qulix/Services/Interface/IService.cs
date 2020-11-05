@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Kurets_Test_Qulix.Services.Interface
 {
-    interface IService<T>
+    public interface IService<T>
     {
         List<T> GetAll();
         void Add(T item);

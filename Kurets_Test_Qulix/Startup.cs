@@ -2,6 +2,10 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Kurets_Test_Qulix.Models;
+using Kurets_Test_Qulix.Services.CompanyService;
+using Kurets_Test_Qulix.Services.EmployeeService;
+using Kurets_Test_Qulix.Services.Interface;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpsPolicy;
@@ -24,7 +28,9 @@ namespace Kurets_Test_Qulix
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddControllersWithViews();
-            
+            services.AddTransient<IService<Employee>, EmployeeService>();
+            services.AddTransient<IService<Company>, CompanyService>();
+
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -52,6 +58,7 @@ namespace Kurets_Test_Qulix
                 endpoints.MapControllerRoute(
                     name: "default",
                     pattern: "{controller=Home}/{action=Index}/{id?}");
+
             });
         }
     }

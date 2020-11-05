@@ -13,7 +13,7 @@ namespace Kurets_Test_Qulix.Services.EmployeeService
     public class EmployeeService : IService<Employee>
     {
         private readonly DataSet data;
-        public string connectionString = @"Data Source=LAPTOP-S2L9C420;Initial Catalog=QulixTest;Integrated Security=True";
+        public string connectionString = @"Data Source=LAPTOP-S2L9C420;Initial Catalog=TestDb;Integrated Security=True";
         
         //Fill the dataset.
         public EmployeeService()
